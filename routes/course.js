@@ -39,11 +39,17 @@ router.post('/', function (req, res, next) {
 
 /*delete */
 router.delete('/:id', function (req, res, next) {
-  Course.deleteCourse(req.params.id, function (err, count) {
+  Course.deleteCourse(req.params.id, function (err, rows) {
     if (err) {
       res.json(err);
     } else {
-      res.json(count);
+      if(rows.affectedRows ==1)
+      {
+        res.json({"message":"row deleted successfully"})
+      }else{
+        res.json({"message":"unable to delete"})
+      }
+
     }
   });
 });
@@ -54,7 +60,12 @@ router.put('/:id', function (req, res, next) {
     if (err) {
       res.json(err);
     } else {
-      res.json(rows);
+      if(rows.affectedRows ==1)
+      {
+        res.json({"message":"row updated successfully"})
+      }else{
+        res.json({"message":"unable to update"})
+      }
     }
   });
 });
